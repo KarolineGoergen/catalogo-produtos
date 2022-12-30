@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.desafio.products.model.Product;
 import com.desafio.products.model.dto.ProductDTO;
 import com.desafio.products.repository.ProductRepository;
-import com.desafio.products.service.exceptions.ObjNotFound;
 
 @Service
 public class ProductService {

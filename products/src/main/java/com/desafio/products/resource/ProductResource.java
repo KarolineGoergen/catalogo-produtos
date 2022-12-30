@@ -42,9 +42,4 @@ public class ProductResource {
 		return ResponseEntity.ok().body(listDTO);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Integer id, @Valid @RequestBody ProductDTO productDTO){
-        Product product = productService.update(id, productDTO);
-        return ResponseEntity.ok().body(new ProductDTO(product));
-    }
 }
