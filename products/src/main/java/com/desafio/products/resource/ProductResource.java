@@ -33,7 +33,9 @@ public class ProductResource {
 
     @PostMapping
     public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO productDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
+        Product newProduct = productService.create(productDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newProduct.getId()).toUri();
+        return ResponseEntity.created(uri).body(new ProductDTO(newProduct));
     }
     
     @GetMapping
@@ -56,8 +58,14 @@ public class ProductResource {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> delete(@PathVariable Integer id){
-        productService.delete(id);
-        return ResponseEntity.noContent().build();
+
+        Optional<Product> product = productService.findById(id);
+
+        if(product.isPresent()){
+            productService.delete(id);
+        }
+        
+        return ResponseEntity.notFound().build();
     }
 
 }
