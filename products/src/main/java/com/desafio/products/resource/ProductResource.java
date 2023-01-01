@@ -2,12 +2,15 @@ package com.desafio.products.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,16 +33,31 @@ public class ProductResource {
 
     @PostMapping
     public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO productDTO){
-        Product newProduct = productService.create(productDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newProduct.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
     }
     
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAll(){
         List<Product> list = productService.findAll();
 		List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		return ResponseEntity.status(HttpStatus.OK).body(listDTO);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable Integer id){
+        Optional<Product> product = productService.findById(id);
+
+        if(product.isPresent()){
+            return ResponseEntity.ok(new ProductDTO(product.get()));
+        }
+        
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> delete(@PathVariable Integer id){
+        productService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
