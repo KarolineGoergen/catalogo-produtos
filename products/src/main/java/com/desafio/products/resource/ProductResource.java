@@ -63,9 +63,27 @@ public class ProductResource {
 
         if(product.isPresent()){
             productService.delete(id);
+            return ResponseEntity.ok().build();
         }
         
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Integer id, @Valid @RequestBody ProductDTO productDTO){
+
+        Optional<Product> product = productService.findById(id);
+
+        if(product.isPresent()){
+            productService.update(id, productDTO);
+            return ResponseEntity.ok(new ProductDTO(product.get()));
+        }
+
+        return ResponseEntity.notFound().build();
+        
+    }
+    
+
+
 
 }

@@ -36,4 +36,10 @@ public class ProductService {
         return product;
     }
 
+    public Product update(Integer id, @Valid ProductDTO productDTO){
+        productDTO.setId(id);
+        Product oldProduct = new Product(productDTO);
+        return productRepository.save(oldProduct);
+    }
+
 }
