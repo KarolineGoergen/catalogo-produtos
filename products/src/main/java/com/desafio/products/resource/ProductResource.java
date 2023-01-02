@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -46,7 +46,7 @@ public class ProductResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable Integer id){
+    public ResponseEntity<ProductDTO> findById(@RequestParam(value="id", required=true) Integer id){
         Optional<Product> product = productService.findById(id);
 
         if(product.isPresent()){
@@ -57,7 +57,7 @@ public class ProductResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> delete(@PathVariable Integer id){
+    public ResponseEntity<ProductDTO> delete(@RequestParam(value="id", required=true) Integer id){
 
         Optional<Product> product = productService.findById(id);
 
@@ -70,7 +70,7 @@ public class ProductResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Integer id, @Valid @RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> update(@RequestParam(value="id", required=true) Integer id, @Valid @RequestBody ProductDTO productDTO){
 
         Optional<Product> product = productService.findById(id);
 
@@ -83,7 +83,14 @@ public class ProductResource {
         
     }
     
+    @GetMapping(value = "/search")
+    public ResponseEntity<List<ProductDTO>> findByPrice(@RequestParam(value="min_price", required=false)double min_price, @RequestParam(value="max_price", required=false)double max_price){
 
+        List<Product> list = productService.findByPrice(min_price,max_price);
+        List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(listDTO);
+
+    }
 
 
 }

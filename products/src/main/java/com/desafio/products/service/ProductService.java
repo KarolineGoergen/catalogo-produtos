@@ -2,7 +2,6 @@ package com.desafio.products.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,11 @@ public class ProductService {
         productDTO.setId(id);
         Product oldProduct = new Product(productDTO);
         return productRepository.save(oldProduct);
+    }
+
+    public List<Product> findByPrice(double min_price, double max_price){
+        return productRepository.findByPrice(min_price, max_price);
+       
     }
 
 }
