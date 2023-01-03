@@ -11,6 +11,6 @@ import com.desafio.products.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 
-    @Query(value = "SELECT * FROM product WHERE price > ? AND price < ?", nativeQuery = true)
-    List<Product> findByPrice(double min_price, double max_price);
+    @Query(value = "SELECT * FROM product WHERE price > :min_price AND price < :max_price AND name LIKE :q OR description LIKE :q", nativeQuery = true)
+    List<Product> findByPrice(String min_price, String max_price, String q);
 }

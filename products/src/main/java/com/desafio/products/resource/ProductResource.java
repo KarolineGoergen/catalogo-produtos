@@ -84,9 +84,10 @@ public class ProductResource {
     }
     
     @GetMapping(value = "/search")
-    public ResponseEntity<List<ProductDTO>> findByPrice(@RequestParam(value="min_price", required=false)double min_price, @RequestParam(value="max_price", required=false)double max_price){
+    public ResponseEntity<List<ProductDTO>> findByPrice(@RequestParam(value="min_price", required=false)String min_price, 
+    @RequestParam(value="max_price", required=false)String max_price, @RequestParam(value="q", required=false)String q){
 
-        List<Product> list = productService.findByPrice(min_price,max_price);
+        List<Product> list = productService.findByPrice(min_price, max_price, q);
         List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(listDTO);
 

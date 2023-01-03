@@ -41,8 +41,8 @@ public class ProductService {
         return productRepository.save(oldProduct);
     }
 
-    public List<Product> findByPrice(double min_price, double max_price){
-        return productRepository.findByPrice(min_price, max_price);
+    public List<Product> findByPrice(String min_price, String max_price, String q){
+        return productRepository.findByPrice(min_price, max_price, q);
        
     }
 
