@@ -5,7 +5,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.desafio.products.model.Product;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 

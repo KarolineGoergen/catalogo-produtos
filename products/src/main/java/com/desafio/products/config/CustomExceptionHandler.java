@@ -25,9 +25,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
 
-        ApiErrorMsg apiErrorMsg = new ApiErrorMsg(status, errors);
+        ApiErrorMsg apiErrorMsg = new ApiErrorMsg(HttpStatus.BAD_REQUEST.value(), errors);
 
-        return new ResponseEntity<>(apiErrorMsg, apiErrorMsg.getStatus_code());
+        return new ResponseEntity<>(apiErrorMsg, HttpStatus.BAD_REQUEST);
     }
     
 }

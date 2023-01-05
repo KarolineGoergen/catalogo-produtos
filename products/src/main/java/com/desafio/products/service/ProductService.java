@@ -41,9 +41,16 @@ public class ProductService {
         return productRepository.save(oldProduct);
     }
 
-    public List<Product> findByPrice(String min_price, String max_price, String q){
-        return productRepository.findByPrice(min_price, max_price, q);
-       
+    public List<Product> findByFilter(String min_price, String max_price, String q){
+
+        if(min_price == null){ min_price = "0"; }
+        
+        if(max_price == null){  String max = productRepository.findMaxPrice(); max_price = max; }
+
+        if(q == null){ return productRepository.findPrice(min_price, max_price);}
+
+        else{  return productRepository.findByPriceAndNameAndDescriptionList(min_price, max_price, q); }
+  
     }
 
 }
