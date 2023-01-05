@@ -13,15 +13,11 @@ Os produtos podem ser filtrados por preço, nome ou descrição.
 Schema de Aplicação:
 
 ```json
-  {
-
-    "name": "Teclado Redragon",
-
-    "description": "Mecânico, switch red",
-
-    "price": 179.99
-  
-  }
+{
+  "name": "Teclado Redragon",
+  "description": "Mecânico, switch red",
+  "price": 179.99
+}
 
 ```
 Documentação Swagger: http://localhost:8085/swagger-ui/index.html#/
