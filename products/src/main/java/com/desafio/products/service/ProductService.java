@@ -15,7 +15,11 @@ import com.desafio.products.repository.ProductRepository;
 public class ProductService {
     
     @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductService(final ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public Product create(ProductDTO productDTO){
         Product newProduct = new Product(productDTO);

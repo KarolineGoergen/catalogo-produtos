@@ -8,7 +8,7 @@ import com.desafio.products.model.Product;
 
 import lombok.*;
 
-
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

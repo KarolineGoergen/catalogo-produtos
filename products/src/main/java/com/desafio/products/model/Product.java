@@ -6,6 +6,7 @@ import com.desafio.products.model.dto.ProductDTO;
 
 import lombok.*;
 
+@Builder
 @Entity
 @Data
 @NoArgsConstructor
